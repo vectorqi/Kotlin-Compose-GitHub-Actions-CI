@@ -1,5 +1,7 @@
 # Kotlin-Compose-GitHub-Actions-CI
 An example project uses the latest technologies in Android Development and CICD.
+![Android CI](https://github.com/<YOUR_USERNAME>/<YOUR_REPO_NAME>/actions/workflows/android-ci.yml/badge.svg)
+
 
 # Steps Overview
 1. **Initialize the Android project**
