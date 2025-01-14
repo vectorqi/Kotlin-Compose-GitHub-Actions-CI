@@ -1,6 +1,7 @@
-# Kotlin-Compose-GitHub-Actions-CI
+
+# Kotlin-Compose-GitHub-Actions-CI ![Android CI](https://github.com/vectorqi/Kotlin-Compose-GitHub-Actions-CI/actions/workflows/android-ci.yml/badge.svg)
 An example project uses the latest technologies in Android Development and CICD.
-![Android CI](https://github.com/vectorqi/Kotlin-Compose-GitHub-Actions-CI/actions/workflows/android-ci.yml/badge.svg)
+
 
 
 # Steps Overview
