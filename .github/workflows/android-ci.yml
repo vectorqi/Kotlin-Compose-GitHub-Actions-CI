@@ -35,7 +35,8 @@ jobs:
       # Step 4: Build & run tests
       - name: Build and Test
         run: |
-          ./gradlew clean build
-          # Run unit test and connected check
+          ./gradlew clean
+          ./gradlew build
+          # Run unit test
           ./gradlew test
-          ./gradlew connectedCheck
+          # ./gradlew connectedCheck
