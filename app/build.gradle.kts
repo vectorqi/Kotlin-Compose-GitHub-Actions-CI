@@ -1,8 +1,7 @@
-import org.gradle.api.JavaVersion.VERSION_1_8
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    jacoco
 }
 
 android {
@@ -31,12 +30,14 @@ android {
             )
         }
     }
+
     compileOptions {
-        sourceCompatibility = VERSION_1_8
-        targetCompatibility = VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -51,6 +52,10 @@ android {
     }
 
     buildToolsVersion = "35.0.0"
+    compileOptions {
+        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_17
+    }
 }
 
 dependencies {
@@ -70,4 +75,61 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+}
+
+// 注册一个生成覆盖率报告的任务
+tasks.register<JacocoReport>("jacocoTestReport") {
+    // 1. 先执行单元测试
+    dependsOn("testDebugUnitTest")
+
+    reports {
+        // 生成 XML 报告
+        xml.required.set(true)
+        // 生成 HTML 报告
+        html.required.set(true)
+        csv.required.set(false)
+    }
+
+    // 排除不需要统计覆盖率的文件或目录
+    val excludes = listOf(
+        "**/R.class",
+        "**/R\$*.class",
+        "**/BuildConfig.*",
+        "**/Manifest*.*",
+        // 测试类自身不计入覆盖率
+        "**/*Test*.*",
+        // 可以按需要排除一些第三方库或生成代码目录
+    )
+
+    // 要统计的 .class 文件所在目录 (Debug 构建产物)
+    // 注意：在 Kotlin DSL 中不能直接用 buildDir，需要用 layout.buildDirectory
+    val debugTree = fileTree(
+        layout.buildDirectory.dir("tmp/kotlin-classes/debug").get().asFile
+    ) {
+        exclude(excludes)
+    }
+
+    // 源码目录（Kotlin/Java）
+    // 以 main/java、main/kotlin 为主
+    sourceDirectories.setFrom(
+        files(
+            "src/main/java",
+            "src/main/kotlin"
+        )
+    )
+
+    classDirectories.setFrom(debugTree)
+
+    // 收集单元测试的执行数据 (executionData)
+    executionData.setFrom(
+        fileTree(
+            layout.buildDirectory.dir("jacoco").get().asFile
+        ) {
+            include(
+                "testDebugUnitTest.exec",
+                // 部分AGP版本会输出到这里:
+                "outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"
+            )
+        }
+    )
 }
