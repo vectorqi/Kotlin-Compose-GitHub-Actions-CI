@@ -2,6 +2,7 @@
 # Kotlin-Compose-GitHub-Actions-CI ![Android CI](https://github.com/vectorqi/Kotlin-Compose-GitHub-Actions-CI/actions/workflows/android-ci.yml/badge.svg)
 An example project uses the latest technologies in Android Development and CI/CD.
 
+
 # Steps Overview
 1. **Initialize the Android project**
 2. **Add Jetpack Compose support**
