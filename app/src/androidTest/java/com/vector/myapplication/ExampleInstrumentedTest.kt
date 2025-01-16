@@ -24,6 +24,6 @@ class ExampleInstrumentedTest {
 
     @Test
     fun testGreetingText() {
-        composeTestRule.onNodeWithText("Hello Compose").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Hello Android").assertIsDisplayed()
     }
 }
