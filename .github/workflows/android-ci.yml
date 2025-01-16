@@ -51,3 +51,16 @@ jobs:
           name: coverage-report
           path: app/build/reports/jacoco/jacocoTestReport/html
 
+      # Step 5: 启动 Android Emulator 并执行仪表/集成测试
+      - name: Run instrumented tests on emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30            # 指定 Emulator 的 API Level (常见 29/30/31 等)
+          script: ./gradlew connectedDebugAndroidTest
+          target: google_apis      # 或者 google_apis_playstore
+          arch: x86_64
+          profile: default
+          # 你也可以使用 'system-images;android-30;google_apis;x86_64' 作为 customPackage，如果默认镜像无法正常安装
+          customPackage: 'sys-img-x86_64-google_apis-30'
+          emulator-options: -no-snapshot
+
