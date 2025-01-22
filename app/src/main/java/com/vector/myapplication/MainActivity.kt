@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,7 +45,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyApp(modifier: Modifier = Modifier,
           names: List<String> = listOf("WakakaLlala","Huhaha")) {
-    var shouldShowOnboarding by remember { mutableStateOf(true) }
+    var shouldShowOnboarding by rememberSaveable { mutableStateOf(true) }
     if(shouldShowOnboarding){
         OnBoardingScreen(OnContinueClicked = {shouldShowOnboarding = false})
     }else{
@@ -90,7 +91,7 @@ fun OnBoardingScreenPreview() {
 }
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    var expanded by remember{mutableStateOf(false)}
+    var expanded by rememberSaveable{mutableStateOf(false)}
     var extraPadding = if(expanded) 48.dp else 0.dp
     Surface(color = MaterialTheme.colorScheme.primary,
         modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)) {
