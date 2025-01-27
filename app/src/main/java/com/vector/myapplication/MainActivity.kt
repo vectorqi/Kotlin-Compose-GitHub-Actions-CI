@@ -127,11 +127,10 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
                         stringResource(R.string.show_more)
                     }
                 )
-            }}
-
+            }
+        }
     }
 }
-
 
 @Preview(showBackground = true, widthDp = 320, uiMode = UI_MODE_NIGHT_YES, name ="GreetingPreviewDark")
 @Preview(showBackground = true, widthDp = 320)
